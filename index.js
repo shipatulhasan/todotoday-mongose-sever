@@ -50,9 +50,23 @@ const run = async()=>{
             const taskData = await newTask.save()
             res.status(200).send(taskData)
         })
+        // update api
+        app.put('/task/:id',async(req,res)=>{
+            const id = req.params.id
+            const data = req.body
+           const updatedData = await Task.updateOne({
+                _id:id
+            },
+            {
+                $set:data
+            }
+            )
+            res.status(200).send(updatedData)
+        })
         // delete api
         app.delete('/task/:id',async(req,res)=>{
             const id = req.params.id
+            
             const task = await Task.deleteOne({_id:id})
             res.status(200).send(task)
         })
